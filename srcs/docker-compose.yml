@@ -1,0 +1,78 @@
+services:
+  mariadb:
+    container_name: mariadb
+    env_file:
+      - ./.env
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - db-volume:/home/vviterbo/data/db
+    networks:
+      - inception
+    init: true
+    restart: on-failure
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress-volume:/home/vviterbo/data/wordpress
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    init: true
+    restart: on-failure
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx/
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress-volume:/home/vviterbo/data/wordpress
+    depends_on:
+      - mariadb
+      - wordpress
+    networks:
+      - inception
+    init: true
+    restart: on-failure
+
+  redis:
+    container_name: redis
+    build:
+      context: ./requirements/redis
+      dockerfile: Dockerfile
+    depends_on:
+      - mariadb
+      - wordpress
+      - nginx
+    networks:
+      - inception
+    restart: on-failure
+
+# For external volumes, you specify the host machine path when you create the volume 
+# using docker volume create, not in the docker-compose.yml file itself.
+#
+# docker volume create --driver local \
+#     --opt type=none \
+#     --opt device=/path/on/your/host \
+#     --opt o=bind \
+#     my-external-volume
+
+volumes:
+  db-volume:
+    name: db-volume
+    external: true
+  wordpress-volume:
+    name: wordpress-volume
+    external: true
+
+networks:
+  inception:
+    name: inception
+    driver: bridge

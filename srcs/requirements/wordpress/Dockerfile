@@ -1,34 +1,22 @@
-FROM debian:Bookworm
-
-ENV DEBIAN_FRONTEND=noninteractive
+FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y \
 	build-essential \
-	g++ \
-	cmake \
-	make \
-	valgrind \
-	gdb \
-	git \
 	vim \
-	telnet \
-	python3 \
 	php-fpm \
+    php-redis \ 
+    php-mysql \
 	mariadb-client \
 	&& rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /workspace
-
+WORKDIR /home
 
 #sudo mysql_secure_installation
 
 EXPOSE 9000
 EXPOSE 3306
 
-COPY .bashrc /root/.bashrc
+COPY ./init_wp.sh /home/
+COPY ./wp-cli.phar /usr/local/bin/wp/wp-cli.phar 
 
-# Optional: Set up a build script
-#RUN bash /root/bashrc
-
-
+CMD ["/home/init_wp.sh"]
