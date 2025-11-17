@@ -16,16 +16,16 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', $MY_MARIADB );
+define( 'DB_NAME', getenv('MYSQL_DATABASE'));
 
 /** MySQL database username */
-define( 'DB_USER', $USER_ID );
+define( 'DB_USER', getenv('MYSQL_USER'));
 
 /** MySQL database password */
-define( 'DB_PASSWORD', $USER_PW );
+define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD'));
 
 /** MySQL hostname */
-define( 'DB_HOST', $DB_HOST );
+define( 'DB_HOST', getenv('DB_HOST'));
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -42,18 +42,19 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         $VV_AUTH_KEY);
-define('SECURE_AUTH_KEY',  $VV_SECURE_AUTH_KEY);
-define('LOGGED_IN_KEY',    $VV_LOGGED_IN_KEY);
-define('NONCE_KEY',        $VV_NONCE_KEY);
-define('AUTH_SALT',        $VV_AUTH_SALT);
-define('SECURE_AUTH_SALT', $VV_SECURE_AUTH_SALT);
-define('LOGGED_IN_SALT',   $VV_LOGGED_IN_SALT);
-define('NONCE_SALT',       $VV_NONCE_SALT);
+define('AUTH_KEY',         getenv('VV_AUTH_KEY'));
+define('SECURE_AUTH_KEY',  getenv('VV_SECURE_AUTH_KEY'));
+define('LOGGED_IN_KEY',    getenv('VV_LOGGED_IN_KEY'));
+define('NONCE_KEY',        getenv('VV_NONCE_KEY'));
+define('AUTH_SALT',        getenv('VV_AUTH_SALT'));
+define('SECURE_AUTH_SALT', getenv('VV_SECURE_AUTH_SALT'));
+define('LOGGED_IN_SALT',   getenv('VV_LOGGED_IN_SALT'));
+define('NONCE_SALT',       getenv('VV_NONCE_SALT'));
 
 
-define( 'WP_REDIS_HOST', $REDIS_HOST );
-define( 'WP_REDIS_PORT', $REDIS_PORT );     
+define('WP_REDIS_HOST', $REDIS_HOST);
+define('WP_REDIS_PORT', $REDIS_PORT);
+define('WP_REDIS_PASSWORD', $REDIS_PW);
 
 
 define('WP_CACHE', true);
@@ -86,8 +87,8 @@ define('WPLANG', '');
  */
 define('WP_DEBUG', false);
 
-define('WP_SITEURL', 'https://vviterbo.42.fr/');
-define('WP_HOME', 'https://vviterbo.42.fr/');
+define('WP_SITEURL', $DOMAIN);
+define('WP_HOME', $DOMAIN);
 
 /* That's all, stop editing! Happy blogging. */
 

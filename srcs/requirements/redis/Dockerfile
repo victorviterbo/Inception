@@ -8,7 +8,10 @@ RUN mkdir -p /var/lib/redis && \
     chown redis:redis /var/lib/redis
 
 COPY redis.conf /home/redis.conf
+COPY init_redis.sh /home/init_redis.sh
+
+RUN chmod +x /home/init_redis.sh
 
 EXPOSE 6379
 
-CMD ["redis-server", "/home/redis.conf"]
+#CMD ["/home/init_redis.sh"]

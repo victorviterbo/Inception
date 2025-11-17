@@ -15,6 +15,8 @@ services:
 
   wordpress:
     container_name: wordpress
+    env_file:
+      - ./.env
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -29,6 +31,8 @@ services:
 
   nginx:
     container_name: nginx
+    env_file:
+      - ./.env
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
@@ -44,6 +48,8 @@ services:
 
   redis:
     container_name: redis
+    env_file:
+      - ./.env
     build:
       context: ./requirements/redis
       dockerfile: Dockerfile
@@ -51,6 +57,10 @@ services:
       - mariadb
       - wordpress
       - nginx
+    command: >
+      redis-server /home/redis.conf
+      --port ${REDIS_PORT}
+      --requirepass ${REDIS_PW}
     networks:
       - inception
     restart: on-failure

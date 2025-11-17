@@ -3,40 +3,31 @@
 mkdir /var/www/
 mkdir /var/www/html
 
-
 rm -rf /var/www/html/*
 cd /var/www/html
 
 
-chmod +x /usr/local/bin/wp/wp-cli.phar 
+/usr/local/bin/wp core download --allow-root
+mv /home/my_wp-config.php /var/www/html/wp-config.php
 
-wp core download --allow-root
+/usr/local/bin/wp core install --url=$DOMAIN/ --title=$TITLE --admin_user=$ADMIN_ID --admin_password=$MYSQL_ROOT_PASSWORD  --allow-root
 
-#mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-
-#mv /wp-config.php /var/www/html/wp-config.php
-
-
-sed -i -r "s/db1/$db_name/1"   wp-config.php
-sed -i-r "s/user/$db_user/1"  wp-config.php
-sed -i -r "s/pwd/$db_user_pwd/1"    wp-config.php
-
-wp core install --url=$domain/ --title=$title --admin_user=$admin_id --admin_password=$admin_pw  --allow-root #--admin_email=$admin_email --skip-email
+/usr/local/bin/wp user create $MYSQL_USER --role=author --user_pass=$MYSQL_PASSWORD --allow-root
 
 
-wp user create $user_id --role=author --user_pass=$user_pw --allow-root #$WP_EMAIL 
+/usr/local/bin/wp plugin install redis-cache --activate --allow-root
 
-
-wp theme install astra --activate --allow-root
-
-wp plugin install redis-cache --activate --allow-root
-
-wp plugin update --all --allow-root
+/usr/local/bin/wp plugin update --all --allow-root
  
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 mkdir /run/php
 
-wp redis enable --allow-root
+/usr/local/bin/wp redis enable --allow-root
+until mysql -h mariadb -u $DB_USER -p$DB_PASSWORD -e 'SELECT 1'; do
+  echo 'Waiting for database...'
+  sleep 3
+done
+
 
 /usr/sbin/php-fpm7.3 -F
