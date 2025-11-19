@@ -12,23 +12,19 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /home
 
-#sudo mysql_secure_installation
-
 EXPOSE 9000
-EXPOSE 3306
 
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
-
 RUN /usr/local/bin/wp --info
 
-COPY ./wp-config.php /home/my_wp-config.php
-
+# Don't copy the manual wp-config.php - let WP-CLI create it
 COPY ./init_wp.sh /home/
+RUN chmod +x /home/init_wp.sh
 
+COPY wp-config.php /home/my-config.php
 
 CMD ["/home/init_wp.sh"]

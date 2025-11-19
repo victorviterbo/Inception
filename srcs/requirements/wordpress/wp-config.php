@@ -16,13 +16,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', getenv('MYSQL_DATABASE'));
+define( 'DB_NAME', getenv('MARIADB_DATABASE'));
 
 /** MySQL database username */
-define( 'DB_USER', getenv('MYSQL_USER'));
+define( 'DB_USER', getenv('MARIADB_USER'));
 
 /** MySQL database password */
-define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD'));
+define( 'DB_PASSWORD', getenv('MARIADB_PASSWORD'));
 
 /** MySQL hostname */
 define( 'DB_HOST', getenv('DB_HOST'));
@@ -52,10 +52,9 @@ define('LOGGED_IN_SALT',   getenv('VV_LOGGED_IN_SALT'));
 define('NONCE_SALT',       getenv('VV_NONCE_SALT'));
 
 
-define('WP_REDIS_HOST', $REDIS_HOST);
-define('WP_REDIS_PORT', $REDIS_PORT);
-define('WP_REDIS_PASSWORD', $REDIS_PW);
-
+define('WP_REDIS_HOST', getenv('REDIS_HOST'));
+define('WP_REDIS_PORT', getenv('REDIS_PORT'));
+define('WP_REDIS_PASSWORD', getenv('REDIS_PW'));
 
 define('WP_CACHE', true);
 /**#@-*/
@@ -87,8 +86,8 @@ define('WPLANG', '');
  */
 define('WP_DEBUG', false);
 
-define('WP_SITEURL', $DOMAIN);
-define('WP_HOME', $DOMAIN);
+define('WP_SITEURL', getenv('DOMAIN'));
+define('WP_HOME', getenv('DOMAIN'));
 
 /* That's all, stop editing! Happy blogging. */
 

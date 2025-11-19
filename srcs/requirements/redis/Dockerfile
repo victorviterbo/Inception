@@ -14,4 +14,4 @@ RUN chmod +x /home/init_redis.sh
 
 EXPOSE 6379
 
-#CMD ["/home/init_redis.sh"]
+CMD ["/home/init_redis.sh"]

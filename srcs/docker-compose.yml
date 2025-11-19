@@ -1,13 +1,19 @@
 services:
   mariadb:
     container_name: mariadb
-    env_file:
+    environment:
       - ./.env
+      - MARIADB_DATABASE
+      - MARIADB_HOST
+      - MARIADB_ROOT_PASSWORD
+      - MARIADB_PASSWORD
+      - MARIADB_USER
+      - MARIADB_PORT
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     volumes:
-      - db-volume:/home/vviterbo/data/db
+      - db-volume:/var/lib/mysql
     networks:
       - inception
     init: true
@@ -15,13 +21,23 @@ services:
 
   wordpress:
     container_name: wordpress
-    env_file:
+    environment:
       - ./.env
+      - WORDPRESS_DB_USER
+      - WORDPRESS_DB_PASSWORD
+      - WORDPRESS_DB_NAME
+      - WP_ADMIN_USR
+      - WP_ADMIN_PWD
+      - MARIADB_PASSWORD
+      - MARIADB_USER
+      - MARIADB_DATABASE
+      - MARIADB_HOST
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     volumes:
-      - wordpress-volume:/home/vviterbo/data/wordpress
+      - wordpress-volume:/var/www/html
+      - db-volume:/var/lib/mysql
     depends_on:
       - mariadb
     networks:
@@ -37,7 +53,7 @@ services:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
     volumes:
-      - wordpress-volume:/home/vviterbo/data/wordpress
+      - wordpress-volume:/var/www/html
     depends_on:
       - mariadb
       - wordpress
@@ -59,8 +75,8 @@ services:
       - nginx
     command: >
       redis-server /home/redis.conf
-      --port ${REDIS_PORT}
-      --requirepass ${REDIS_PW}
+      --port 6379
+      --requirepass deK6!cD~^BZwN6K=9C9~
     networks:
       - inception
     restart: on-failure
