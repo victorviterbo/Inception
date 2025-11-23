@@ -15,8 +15,6 @@ COPY ./init_db.sh /
 
 RUN chmod +x /init_db.sh
 
-COPY ./server.cnf /etc/mysql/mariadb.conf.d/
-
+COPY ./50-server.cnf /etc/mysql/mariadb.conf.d/
 
 CMD ["bash", "/init_db.sh"]
-

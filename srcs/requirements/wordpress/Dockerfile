@@ -4,13 +4,10 @@ RUN apt-get update && apt-get install -y \
 	build-essential \
 	vim \
 	php-fpm \
-    php-redis \ 
     php-mysql \
 	mariadb-client \
 	curl \
 	&& rm -rf /var/lib/apt/lists/*
-
-WORKDIR /home
 
 EXPOSE 9000
 
@@ -21,7 +18,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 RUN /usr/local/bin/wp --info
 
-# Don't copy the manual wp-config.php - let WP-CLI create it
 COPY ./init_wp.sh /home/
 RUN chmod +x /home/init_wp.sh
 

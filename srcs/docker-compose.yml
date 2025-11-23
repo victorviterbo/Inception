@@ -3,12 +3,12 @@ services:
     container_name: mariadb
     environment:
       - ./.env
-      - MARIADB_DATABASE
-      - MARIADB_HOST
-      - MARIADB_ROOT_PASSWORD
-      - MARIADB_PASSWORD
-      - MARIADB_USER
-      - MARIADB_PORT
+      - MYSQL_DATABASE
+      - MYSQL_HOST
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+      - MYSQL_USER
+      - MYSQL_PORT
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
@@ -28,10 +28,10 @@ services:
       - WORDPRESS_DB_NAME
       - WP_ADMIN_USR
       - WP_ADMIN_PWD
-      - MARIADB_PASSWORD
-      - MARIADB_USER
-      - MARIADB_DATABASE
-      - MARIADB_HOST
+      - MYSQL_PASSWORD
+      - MYSQL_USER
+      - MYSQL_DATABASE
+      - MYSQL_HOST
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -47,13 +47,17 @@ services:
 
   nginx:
     container_name: nginx
-    env_file:
+    environment:
       - ./.env
+      - DOMAIN
+      - CERTIFICATES
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
     volumes:
       - wordpress-volume:/var/www/html
+    ports:
+     - 443:443
     depends_on:
       - mariadb
       - wordpress
@@ -61,34 +65,6 @@ services:
       - inception
     init: true
     restart: on-failure
-
-  redis:
-    container_name: redis
-    env_file:
-      - ./.env
-    build:
-      context: ./requirements/redis
-      dockerfile: Dockerfile
-    depends_on:
-      - mariadb
-      - wordpress
-      - nginx
-    command: >
-      redis-server /home/redis.conf
-      --port 6379
-      --requirepass deK6!cD~^BZwN6K=9C9~
-    networks:
-      - inception
-    restart: on-failure
-
-# For external volumes, you specify the host machine path when you create the volume 
-# using docker volume create, not in the docker-compose.yml file itself.
-#
-# docker volume create --driver local \
-#     --opt type=none \
-#     --opt device=/path/on/your/host \
-#     --opt o=bind \
-#     my-external-volume
 
 volumes:
   db-volume:
