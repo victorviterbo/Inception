@@ -4,8 +4,7 @@ RUN apt-get update && apt-get install -y \
 	build-essential \
 	vim \
 	openssl \
-	nginx \
-	&& rm -rf /var/lib/apt/lists/*
+	nginx
 
 EXPOSE 9000
 EXPOSE 443

@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+DB_VOLUME 	=	/Users/victorviterbo/Desktop/42/Inception/dummydb/
+WP_VOLUME	=	/Users/victorviterbo/Desktop/42/Inception/dummysite/
+
+
 docker compose down
 
 docker volume rm db-volume
@@ -9,15 +13,16 @@ docker volume rm wordpress-volume
 rm -fr /Users/victorviterbo/Desktop/42/Inception/dummysite/*
 rm -fr /Users/victorviterbo/Desktop/42/Inception/dummydb/*
 
-DB_VOLUME 	=	/Users/victorviterbo/Desktop/42/Inception/dummydb/
-WP_VOLUME	=	/Users/victorviterbo/Desktop/42/Inception/dummysite/
 
 docker volume create  --name db-volume --driver local --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummydb/ --opt o=bind;
 docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummysite/ --opt o=bind;
 
-# Start the services
 echo "Starting Docker Compose services..."
-docker-compose up --build -d
+docker compose build
+
+docker compose up > compose.log &
+
+sleep 5
 
 # Wait for services to be ready
 echo "Waiting for services to be ready..."

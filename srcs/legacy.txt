@@ -1,0 +1,2 @@
+if [ -z "$(ls -A /var/lib/mysql)" ]; then
+    

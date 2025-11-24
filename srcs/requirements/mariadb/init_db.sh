@@ -2,24 +2,24 @@
 
 set -e
 
-if [ -z "$(ls -A /var/lib/mysql)" ]; then
+mysqld --datadir='/var/lib/mysql' &
 
-    mysql_install_db --datadir='/var/lib/mysql' 
+MYSQL_PID=$!
+echo MYSQL_PID
 
-    mysqld_safe --datadir='/var/lib/mysql' &
+echo $MYSQL_PID
 
-    MYSQL_PID=$!
+sleep 10000000000
 
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
-    mariadb -u root -p${MYSQL_ROOT_PASSWORD} -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" || mariadb -u root -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" || mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" || echo "failed cmd 1" && exit 1
 
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES;"
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" || echo "failed cmd 2" && exit 1
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" || echo "failed cmd 3" && exit 1
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';" || echo "failed cmd 4" && exit 1
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;" || echo "failed cmd 5" && exit 1
 
-    kill $MYSQL_PID
+mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES;" || echo "failed cmd 6" && exit 1
 
-fi
+kill $MYSQL_PID || echo "failed cmd exit" && exit 1
 
-mysqld_safe --datadir=/var/lib/mysql
+mysqld

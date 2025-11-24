@@ -6,8 +6,7 @@ RUN apt-get update && apt-get install -y \
 	php-fpm \
     php-mysql \
 	mariadb-client \
-	curl \
-	&& rm -rf /var/lib/apt/lists/*
+	curl
 
 EXPOSE 9000
 
