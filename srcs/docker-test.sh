@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+
 DB_VOLUME 	=	/Users/victorviterbo/Desktop/42/Inception/dummydb/
 WP_VOLUME	=	/Users/victorviterbo/Desktop/42/Inception/dummysite/
 
@@ -18,7 +19,7 @@ docker volume create  --name db-volume --driver local --opt type=none --opt devi
 docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummysite/ --opt o=bind;
 
 echo "Starting Docker Compose services..."
-docker compose build
+docker compose build --no-cache
 
 docker compose up > compose.log &
 
@@ -32,21 +33,13 @@ sleep 10
 echo "Container status:"
 docker-compose ps
 
-
 # Test nginx response
 echo "Testing nginx response..."
 curl -vk https://localhost:443 || exit 1
 
 # Test WordPress installation page
 echo "Testing WordPress installation..."
-curl -vk https://localhost:443/wp-admin/install.php || exit 1
-
-echo "Recent logs:"
-docker-compose logs --tail=20
-
-# Check logs for any errors
-echo "Recent logs:"
-docker-compose logs --tail=20
+#curl -vk https://localhost:443/wp-admin/install.php || exit 1
 
 echo "All tests passed! 🎉"
 

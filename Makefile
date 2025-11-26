@@ -6,7 +6,7 @@
 #    By: victorviterbo <victorviterbo@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 22:31:07 by victorviter       #+#    #+#              #
-#    Updated: 2025/11/23 20:09:24 by victorviter      ###   ########.fr        #
+#    Updated: 2025/11/26 10:10:44 by victorviter      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ $(NAME)		:
 				@if [ $(strip $(wp_volume_ok)) -eq 0 ]; then docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=$(WP_VOLUME) --opt o=bind; \
 				fi
 
-				docker compose  -f ./srcs/docker-compose.yml up --build
+				docker compose  -f ./srcs/docker-compose.yml up
 				
 				@make -s header
 				@printf "$(COLOR_G)[OK] $(NAME) is ready!$(C_RESET)\n" || \
@@ -41,6 +41,24 @@ $(NAME)		:
 
 down		:
 				docker compose -f srcs/docker-compose.yml down
+
+re			:
+				docker compose -f srcs/docker-compose.yml down
+				docker compose -f srcs/docker-compose.yml build --no-cache
+				docker compose -f srcs/docker-compose.yml up
+
+deepre		:
+				docker compose -f srcs/docker-compose.yml down
+				
+				docker volume rm db-volume
+				docker volume rm wordpress-volume
+				rm -fr /Users/victorviterbo/Desktop/42/Inception/dummysite/*
+				rm -fr /Users/victorviterbo/Desktop/42/Inception/dummydb/*
+				docker volume create  --name db-volume --driver local --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummydb/ --opt o=bind;
+				docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummysite/ --opt o=bind;
+				
+				docker compose -f srcs/docker-compose.yml build --no-cache
+				docker compose -f srcs/docker-compose.yml up
 
 .PHONY		:	all clean re
 .SILENT		:	all $(NAME)clean fclean

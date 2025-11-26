@@ -18,6 +18,7 @@ RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 RUN /usr/local/bin/wp --info
 
 COPY ./init_wp.sh /home/
+COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN chmod +x /home/init_wp.sh
 
 COPY wp-config.php /home/my-config.php

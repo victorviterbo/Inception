@@ -32,6 +32,7 @@ services:
       - MYSQL_USER
       - MYSQL_DATABASE
       - MYSQL_HOST
+      - DB_HOST
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
