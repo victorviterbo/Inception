@@ -3,8 +3,8 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y \
 	build-essential \
 	vim \
-	openssl \
-	nginx
+	openssl=3.0.17-1~deb12u3 \
+	nginx=1.22.1-9+deb12u3
 
 COPY ./init_nginx.sh /home/init_nginx.sh
 

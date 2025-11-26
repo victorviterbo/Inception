@@ -3,10 +3,10 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y \
 	build-essential \
 	vim \
-	php-fpm \
-    php-mysql \
-	mariadb-client \
-	curl
+	php-fpm=2:8.2+93 \
+    php-mysql=2:8.2+93 \
+	mariadb-client=1:10.11.14-0+deb12u2 \
+	curl=7.88.1-10+deb12u14
 
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html

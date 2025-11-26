@@ -3,9 +3,8 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y \
 	build-essential \
 	vim \
-    sudo \
-    mariadb-server \
-    mariadb-client
+    mariadb-server=1:10.11.14-0+deb12u2 \
+    mariadb-client=1:10.11.14-0+deb12u2
 
 EXPOSE 3306
 

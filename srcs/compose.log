@@ -16,3 +16,6 @@ wordpress  |
 wordpress  | Success: WordPress installed successfully.
 wordpress  | Configuring PHP-FPM...
 wordpress  | Starting PHP-FPM...
+[Knginx exited with code 143
+[Kwordpress exited with code 0
+[Kmariadb exited with code 143

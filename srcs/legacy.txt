@@ -55,3 +55,24 @@ WORDPRESS_HOME = "https://vviterbo.42.ch"
 
 
       
+
+
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	vim \
+	openssl=3.0.17-1~deb12u3 \
+	nginx=1.22.1-9+deb12u3
+
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	vim \
+	php-fpm=8.2 \
+    php-mysql=2:8.2+93 \
+	mariadb-client=1:10.11.14-0+deb12u2 \
+	curl=7.88.1-10+deb12u14
+
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	vim \
+    mariadb-server=1:10.11.14-0+deb12u2 \
+    mariadb-client=1:10.11.14-0+deb12u2
