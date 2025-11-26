@@ -23,16 +23,25 @@ services:
     container_name: wordpress
     environment:
       - ./.env
+      - WORDPRESS_DB_HOST
       - WORDPRESS_DB_USER
       - WORDPRESS_DB_PASSWORD
       - WORDPRESS_DB_NAME
-      - WP_ADMIN_USR
-      - WP_ADMIN_PWD
-      - MYSQL_PASSWORD
-      - MYSQL_USER
-      - MYSQL_DATABASE
-      - MYSQL_HOST
-      - DB_HOST
+      - WP_PORT
+      - WP_USR
+      - WP_EMAIL
+      - WP_PWD
+      - WORDPRESS_SITEURL
+      - WORDPRESS_HOME
+      - WP_EMAIL
+      - VV_AUTH_KEY
+      - VV_SECURE_AUTH_KEY
+      - VV_LOGGED_IN_KEY
+      - VV_NONCE_KEY
+      - VV_AUTH_SALT
+      - VV_SECURE_AUTH_SALT
+      - VV_LOGGED_IN_SALT
+      - VV_NONCE_SALT
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile

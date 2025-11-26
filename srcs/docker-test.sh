@@ -19,7 +19,7 @@ docker volume create  --name db-volume --driver local --opt type=none --opt devi
 docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummysite/ --opt o=bind;
 
 echo "Starting Docker Compose services..."
-docker compose build --no-cache
+docker compose build
 
 docker compose up > compose.log &
 

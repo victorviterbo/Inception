@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y \
 	mariadb-client \
 	curl
 
-EXPOSE 9000
-
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
 

@@ -1,6 +1,6 @@
 Attaching to mariadb, nginx, wordpress
 mariadb  | MYSQL_PID
-mariadb  | 8
+mariadb  | 9
 mariadb  | MariaDB unavailable, retrying in 1 second (30 attempts left)...
 wordpress  | Downloading WordPress 6.8.3 (en_US)...
 mariadb    | MariaDB is up and running!
@@ -12,8 +12,7 @@ mariadb    | performance_schema
 mariadb    | sys
 wordpress  | md5 hash verified: d2c8b06fa3875fb890e3fa8fdbbc42fb
 wordpress  | Success: WordPress downloaded.
+wordpress  | 
+wordpress  | Success: WordPress installed successfully.
 wordpress  | Configuring PHP-FPM...
 wordpress  | Starting PHP-FPM...
-[Knginx exited with code 143
-[Kwordpress exited with code 0
-[Kmariadb exited with code 143

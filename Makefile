@@ -6,7 +6,7 @@
 #    By: victorviterbo <victorviterbo@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 22:31:07 by victorviter       #+#    #+#              #
-#    Updated: 2025/11/26 10:10:44 by victorviter      ###   ########.fr        #
+#    Updated: 2025/11/26 13:18:52 by victorviter      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,7 @@ $(NAME)		:
 down		:
 				docker compose -f srcs/docker-compose.yml down
 
-re			:
-				docker compose -f srcs/docker-compose.yml down
-				docker compose -f srcs/docker-compose.yml build --no-cache
-				docker compose -f srcs/docker-compose.yml up
+re			: down up
 
 deepre		:
 				docker compose -f srcs/docker-compose.yml down

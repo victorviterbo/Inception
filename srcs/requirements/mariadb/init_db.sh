@@ -2,6 +2,8 @@
 
 set -e
 
+sed -i 's|port                    = ####|port                    = '"${MYSQL_PORT}"'|1' /etc/mysql/mariadb.conf.d/50-server.cnf
+
 mysqld --datadir='/var/lib/mysql' &
 
 MYSQL_PID=$!

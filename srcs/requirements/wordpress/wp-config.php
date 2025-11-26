@@ -16,16 +16,16 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', getenv('MYSQL_DATABASE'));
+define( 'DB_NAME', getenv('WORDPRESS_DB_NAME'));
 
 /** MySQL database username */
-define( 'DB_USER', getenv('MYSQL_USER'));
+define( 'DB_USER', getenv('WORDPRESS_DB_USER'));
 
 /** MySQL database password */
-define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD'));
+define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD'));
 
 /** MySQL hostname */
-define( 'DB_HOST', getenv('DB_HOST'));
+define( 'DB_HOST', getenv('WORDPRESS_DB_HOST'));
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -51,10 +51,7 @@ define('SECURE_AUTH_SALT', getenv('VV_SECURE_AUTH_SALT'));
 define('LOGGED_IN_SALT',   getenv('VV_LOGGED_IN_SALT'));
 define('NONCE_SALT',       getenv('VV_NONCE_SALT'));
 
-
-define('WP_REDIS_HOST', getenv('REDIS_HOST'));
-define('WP_REDIS_PORT', getenv('REDIS_PORT'));
-define('WP_REDIS_PASSWORD', getenv('REDIS_PW'));
+define('WP_ALLOW_REPAIR', true);
 
 define('WP_CACHE', true);
 /**#@-*/
@@ -86,8 +83,8 @@ define('WPLANG', '');
  */
 define('WP_DEBUG', false);
 
-define('WP_SITEURL', getenv('DOMAIN'));
-define('WP_HOME', getenv('DOMAIN'));
+define('WP_SITEURL', getenv('WORDPRESS_SITEURL'));
+define('WP_HOME', getenv('WORDPRESS_HOME'));
 
 /* That's all, stop editing! Happy blogging. */
 
