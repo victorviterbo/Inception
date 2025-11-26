@@ -4,21 +4,25 @@ set -e
 
 cd /var/www/html
 
-wp core download --allow-root
+if [ ! -f /var/www/html/wp-config.php ]; then
 
-mv /home/my-config.php /var/www/html/wp-config.php
+    wp core download --allow-root
 
-wp core install --allow-root \
-    --url='https://vviterbo.42.ch' \
-    --title='My Site' \
-    --admin_user=${WP_USR} \
-    --admin_password=${WP_PWD} \
-    --admin_email=${WP_EMAIL} \
-    --skip-email
+    mv /home/my-config.php /var/www/html/wp-config.php
 
-chmod -R 777 /var/www/html
+    wp core install --allow-root \
+        --url='https://vviterbo.42.ch' \
+        --title='My Site' \
+        --admin_user=${WP_USR} \
+        --admin_password=${WP_PWD} \
+        --admin_email=${WP_EMAIL} \
+        --skip-email
 
-echo "Configuring PHP-FPM..."
+    chmod -R 777 /var/www/html
+
+    echo "Configuring PHP-FPM..."
+
+fi
 
 sed -i 's|^listen = #|listen = '"$WP_PORT"'|g' /etc/php/8.2/fpm/pool.d/www.conf
 
