@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: victorviterbo <victorviterbo@student.42    +#+  +:+       +#+         #
+#    By: vviterbo <vviterbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 22:31:07 by victorviter       #+#    #+#              #
-#    Updated: 2025/11/26 13:18:52 by victorviter      ###   ########.fr        #
+#    Updated: 2025/12/11 13:34:11 by vviterbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ all			:	$(NAME)
 
 up			:	$(NAME)
 
-DB_VOLUME 	=	/Users/victorviterbo/Desktop/42/Inception/dummydb/
-WP_VOLUME	=	/Users/victorviterbo/Desktop/42/Inception/dummysite/
+DB_VOLUME 	=	/home/vviterbo/data/dummydb/
+WP_VOLUME	=	/home/vviterbo/data/dummysite/
 
 db_volume_ok = $(shell docker volume ls | grep "db-volume" | wc -l)
 wp_volume_ok = $(shell docker volume ls | grep "wordpress-volume" | wc -l)
@@ -49,10 +49,10 @@ deepre		:
 				
 				docker volume rm db-volume
 				docker volume rm wordpress-volume
-				rm -fr /Users/victorviterbo/Desktop/42/Inception/dummysite/*
-				rm -fr /Users/victorviterbo/Desktop/42/Inception/dummydb/*
-				docker volume create  --name db-volume --driver local --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummydb/ --opt o=bind;
-				docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=/Users/victorviterbo/Desktop/42/Inception/dummysite/ --opt o=bind;
+				rm -fr ${DB_VOLUME}/*
+				rm -fr ${WP_VOLUME}/*
+				docker volume create  --name db-volume --driver local --opt type=none --opt device=${DB_VOLUME} --opt o=bind;
+				docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=${WP_VOLUME} --opt o=bind;
 				
 				docker compose -f srcs/docker-compose.yml build --no-cache
 				docker compose -f srcs/docker-compose.yml up
