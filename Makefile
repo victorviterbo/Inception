@@ -33,7 +33,7 @@ $(NAME)		:
 				@if [ $(strip $(wp_volume_ok)) -eq 0 ]; then docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=$(WP_VOLUME) --opt o=bind; \
 				fi
 
-				docker compose  -f ./srcs/docker-compose.yml up
+				docker compose  -f ./srcs/docker-compose.yml up -d
 				
 				@make -s header
 				@printf "$(COLOR_G)[OK] $(NAME) is ready!$(C_RESET)\n" || \
@@ -55,7 +55,7 @@ deepre		:
 				docker volume create  --name wordpress-volume --driver local  --opt type=none --opt device=${WP_VOLUME} --opt o=bind;
 				
 				docker compose -f srcs/docker-compose.yml build --no-cache
-				docker compose -f srcs/docker-compose.yml up
+				docker compose -f srcs/docker-compose.yml up -d
 
 .PHONY		:	all clean re
 .SILENT		:	all $(NAME)clean fclean
