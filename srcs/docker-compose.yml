@@ -68,7 +68,7 @@ services:
     volumes:
       - wordpress-volume:/var/www/html
     ports:
-     - 443:443
+     - $NGINX_PORT:$NGINX_PORT
     depends_on:
       - mariadb
       - wordpress
